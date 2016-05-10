@@ -21,6 +21,7 @@
   become: yes
   become_user: "{{ installer.user.name }}"
   roles:
+      - {role: linux/rhel/libguestfs, when: ansible_distribution == 'RedHat'}
       - {role: installer/ospd/images}
 
 - name: Start introspection
