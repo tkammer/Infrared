@@ -4,6 +4,12 @@ subparsers:
         formatter_class: RawTextHelpFormatter
         help: Installs openstack using OSP Director
         groups:
+            - title: Introspection
+              options:
+                instackenv-file:
+                    type: YamlFile
+                    help: The instackenv.json configuration file for introspection.
+
             - title: Firewall
               options:
                 firewall:
@@ -16,8 +22,8 @@ subparsers:
                 product-version:
                     type: Value
                     help: The product version
-                    required: yes
                     choices: ["7", "8", "9"]
+                    default: 8
                 product-build:
                     type: Value
                     help: The product build
@@ -25,8 +31,8 @@ subparsers:
                 product-core-version:
                     type: Value
                     help: The product core version
-                    required: yes
                     choices: ["7", "8", "9"]
+                    default: 8
                 product-core-build:
                     type: Value
                     help: The product core build
@@ -58,8 +64,8 @@ subparsers:
                 images-task:
                     type: Value
                     help: Specifies whether the images should be built or imported
-                    required: yes
                     choices: [import, build]
+                    default: import
                 images-url:
                     type: Value
                     help: Specifies the import image url. Required only when images task is 'import'
@@ -77,7 +83,7 @@ subparsers:
                 network-isolation:
                     type: YamlFile
                     help: The overcloud network isolation type
-                    required: yes
+                    default: "three-nics-vlans.yml"
                 network-isolation-template:
                     type: YamlFile
                     help: The overcloud network isolation template
