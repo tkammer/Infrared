@@ -1,0 +1,43 @@
+---
+# This template configures each role to use Vlans on a single nic for
+# each isolated network, but uses multiple nic's on each node:
+#
+# nic1 = pxe/management/ctlplane
+# nic2 = VLAN trunk for network isolation
+# nic3 = public/external access
+#
+# This template assumes use of network-isolation.yaml.
+#
+# FIXME: if/when we add functionality to heatclient to include heat
+# environment files we should think about using it here to automatically
+# include network-isolation.yaml.
+resource_registry:
+  OS::TripleO::BlockStorage::Net::SoftwareConfig: network/{{ installer.network.isolation }}/cinder-storage.yaml
+  OS::TripleO::Compute::Net::SoftwareConfig: network/{{ installer.network.isolation }}/compute.yaml
+  OS::TripleO::Controller::Net::SoftwareConfig: network/{{ installer.network.isolation }}/controller.yaml
+  OS::TripleO::ObjectStorage::Net::SoftwareConfig: network/{{ installer.network.isolation }}/swift-storage.yaml
+  OS::TripleO::CephStorage::Net::SoftwareConfig: network/{{ installer.network.isolation }}/ceph-storage.yaml
+
+parameter_defaults:
+    # Customize the IP subnets to match the local environment
+    ExternalInterfaceDefaultRoute: '10.34.75.254'
+    ExternalNetCidr: '10.34.75.0/24'
+    ExternalAllocationPools: [{'start': '10.34.75.10', 'end': '10.34.75.44'}]
+    ExternalNetworkVlanID: '311'
+    InternalApiNetCidr: '172.21.33.0/24'
+    InternalApiAllocationPools: [{'start': '172.21.33.10', 'end': '172.21.33.200'}]
+    InternalApiNetworkVlanID: '312'
+    StorageNetCidr: '172.21.36.0/24'
+    StorageAllocationPools: [{'start': '172.21.36.10', 'end': '172.21.36.200'}]
+    StorageNetworkVlanID: '313'
+    StorageMgmtNetCidr: '172.21.35.0/24'
+    StorageMgmtAllocationPools: [{'start': '172.21.35.10', 'end': '172.21.35.200'}]
+    StorageMgmtNetworkVlanID: '314'
+    TenantNetCidr: '172.16.0.0/24'
+    TenantAllocationPools: [{'start': '172.16.0.10', 'end': '172.16.0.200'}]
+    TenantNetworkVlanID: '315'
+    ControlPlaneSubnetCidr: '24'
+    ControlPlaneDefaultRoute: '192.0.2.1'
+    EC2MetadataIp: '192.0.2.1'
+    DnsServers: ['192.0.2.1','10.34.75.254',]
+    NeutronExternalNetworkBridge: "''"

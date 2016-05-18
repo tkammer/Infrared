@@ -1,9 +1,16 @@
 - name: append the swift storage template line to the base overcloud deploy script
   lineinfile:
       dest: "~/overcloud_deploy.sh"
-      line: '--swift-storage-scale {{ groups["swift"]| length }} \'
+      line: '--swift-storage-scale {{ installer.nodes.storage }} \'
+  when: installer.storage.external == "no"
 
 - name: append the swift storage template line to the base overcloud deploy script
   lineinfile:
       dest: "~/overcloud_deploy.sh"
-      line: '{% for flavor in tagged_flavors %}{% if flavor.cmd is defined and "swift" in flavor.cmd %}--swift-storage-flavor {{ flavor.cmd.split() | last }} \{% endif %}{% endfor %}'
+      line: '--swift-storage-flavor {% if groups["swift"] is defined %}swift-{{ "swift" | to_uuid }}{% else %}baremetal{% endif %} \'
+  when: installer.storage.external == "no"
+
+- name: append the storage template line to the base overcloud deploy script
+  lineinfile:
+      dest: "~/overcloud_deploy.sh"
+      line: '-e /usr/share/openstack-tripleo-heat-templates/environments/storage-environment.yaml \'

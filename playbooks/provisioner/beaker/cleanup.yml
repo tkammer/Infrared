@@ -12,10 +12,3 @@
           distro_tree_id: "{{ provisioner.image.distro.trees.id }}"
           web_service: "{{ provisioner.web.service }}"
           ca_cert: "{{ provisioner.ca.cert | default(omit) }}"
-
-    - name: wait for ssh
-      wait_for:
-          port: 22
-          host: "{{ provisioner.host.address }}"
-          search_regex: OpenSSH
-      delay: 10

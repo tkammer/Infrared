@@ -7,13 +7,13 @@
 - name: append the ceph storage template line to the base overcloud deploy script
   lineinfile:
       dest: "~/overcloud_deploy.sh"
-      line: '--ceph-storage-scale {{ groups["ceph"] | length }} \'
+      line: '--ceph-storage-scale {{ installer.nodes.storage }} \'
   when: installer.storage.external == "no"
 
 - name: append the ceph storage template line to the base overcloud deploy script
   lineinfile:
       dest: "~/overcloud_deploy.sh"
-      line: '--ceph-storage-flavor ceph-{{ "ceph" | to_uuid }} \'
+      line: '--ceph-storage-flavor {% if groups["ceph"] is defined %}ceph-{{ "ceph" | to_uuid }}{% else %}baremetal{% endif %} \'
   when: installer.storage.external == "no"
 
 - name: append the storage template line to the base overcloud deploy script

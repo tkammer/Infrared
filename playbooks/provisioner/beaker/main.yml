@@ -51,5 +51,5 @@
       add_host:
           name: "{{ provisioner.host.address }}"
           ansible_ssh_pass: None
-          ansible_ssh_private_key_file: "{{ inventory_dir }}/rhos-jenkins.pub"
+          ansible_ssh_private_key_file: "{{ inventory_dir }}/rhos-jenkins.pem"
       when: provisioner.host.password is defined

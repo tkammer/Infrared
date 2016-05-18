@@ -30,9 +30,20 @@
   become: yes
   become_user: "{{ installer.user.name }}"
   roles:
-      - {role: installer/ospd/overcloud/introspection,
-        undercloud_provision_cidr: "{{ ansible_br_ctlplane.ipv4.network }}/{{ ansible_br_ctlplane.ipv4.netmask }}",
-        when: "installer.overcloud is defined"}
+      - {role: installer/ospd/overcloud/introspection, when: "installer.overcloud is defined"}
+  vars:
+      - undercloud_provision_cidr: "{{ ansible_br_ctlplane.ipv4.network }}/{{ ansible_br_ctlplane.ipv4.netmask }}"
+  tasks:
+      - name: get subnet ID to update neutron's DNS server
+        shell: "source ~/stackrc; neutron subnet-list | grep '{{ undercloud_provision_cidr | ipsubnet }}' | awk '{print $2;}'"
+        register: subnet_id
+
+      - name: get the nameserver
+        shell: "cat /etc/resolv.conf | grep -m 1 'nameserver' | awk '{print $2}'"
+        register: nameserver
+
+      - name: update neutron DNS server
+        shell: "source ~/stackrc; neutron subnet-update {{ subnet_id.stdout }} --dns-nameserver {{ nameserver.stdout }}"
 
 - name: Tag hosts with flavors
   tags: tagging
@@ -41,7 +52,7 @@
   become: yes
   become_user: "{{ installer.user.name }}"
   roles:
-      - {role: installer/ospd/overcloud/tagging, when: "installer.overcloud is defined"}
+      - {role: installer/ospd/overcloud/tagging, when: "'overcloud_nodes' in groups"}
 
 - name: Installing the overcloud
   tags: overcloud
@@ -50,7 +61,9 @@
   become_user: "{{ installer.user.name }}"
   pre_tasks:
       - name: create the template folder for customization
-        shell: "mkdir -p {{ installer.overcloud.template_base }}"
+        file:
+            name: "{{ installer.overcloud.template_base }}"
+            state: directory
 
       - name: create the base overcloud deploy script
         template:
@@ -59,7 +72,8 @@
             mode: 0755
   roles:
       - {role: installer/ospd/overcloud/storage, when: "installer.storage is defined and installer.storage.backend != 'none'"}
-      - {role: installer/ospd/overcloud/network, when: "installer.network is defined and installer.network.isolation.enable == 'yes'"}
+      - {role: installer/ospd/overcloud/network, when: "installer.network is defined and installer.network.isolation != 'no'"}
+      - {role: installer/ospd/overcloud/ssl, when: "installer.overcloud.ssl == 'yes'"}
 
   tasks:
       - name: append the invocation line to the base overcloud deploy script

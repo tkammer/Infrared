@@ -1,0 +1,95 @@
+{
+  "nodes": [
+    {
+      "pm_password": "qum10net",
+      "pm_type": "pxe_ipmitool",
+      "mac": [
+        "0C:C4:7A:78:D3:E5"
+      ],
+      "cpu": "32",
+      "memory": "32768",
+      "disk": "400",
+      "arch": "x86_64",
+      "pm_user": "root",
+      "pm_addr": "10.34.112.141"
+    },
+    {
+      "pm_password": "qum10net",
+      "pm_type": "pxe_ipmitool",
+      "mac": [
+        "0C:C4:7A:78:70:87"
+      ],
+      "cpu": "32",
+      "memory": "32768",
+      "disk": "400",
+      "arch": "x86_64",
+      "pm_user": "root",
+      "pm_addr": "10.34.112.143"
+    },
+    {
+      "pm_password": "qum10net",
+      "pm_type": "pxe_ipmitool",
+      "mac": [
+        "0C:C4:7A:78:70:DC"
+      ],
+      "cpu": "32",
+      "memory": "32768",
+      "disk": "400",
+      "arch": "x86_64",
+      "pm_user": "root",
+      "pm_addr": "10.34.112.145"
+    },
+    {
+      "pm_password": "qum10net",
+      "pm_type": "pxe_ipmitool",
+      "mac": [
+        "0C:C4:7A:78:70:82"
+      ],
+      "cpu": "32",
+      "memory": "32768",
+      "disk": "400",
+      "arch": "x86_64",
+      "pm_user": "root",
+      "pm_addr": "10.34.112.147"
+    },
+    {
+      "pm_password": "qum10net",
+      "pm_type": "pxe_ipmitool",
+      "mac": [
+        "0C:C4:7A:78:70:85"
+      ],
+      "cpu": "32",
+      "memory": "32768",
+      "disk": "400",
+      "arch": "x86_64",
+      "pm_user": "root",
+      "pm_addr": "10.34.112.149"
+    },
+    {
+      "pm_password": "qum10net",
+      "pm_type": "pxe_ipmitool",
+      "mac": [
+        "0C:C4:7A:78:70:8B"
+      ],
+      "cpu": "32",
+      "memory": "32768",
+      "disk": "400",
+      "arch": "x86_64",
+      "pm_user": "root",
+      "pm_addr": "10.34.112.151"
+    },
+    {
+      "pm_password": "qum10net",
+      "pm_type": "pxe_ipmitool",
+      "mac": [
+        "0C:C4:7A:78:70:EE"
+      ],
+      "cpu": "32",
+      "memory": "32768",
+      "disk": "400",
+      "arch": "x86_64",
+      "pm_user": "root",
+      "pm_addr": "10.34.112.153"
+    }
+  ]
+}

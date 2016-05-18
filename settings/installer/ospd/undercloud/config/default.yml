@@ -1,2 +1,5 @@
 ---
-local_interface: "eth0"
+# Leaving this file empty uses the default undercloud.conf.sample file provided under /etc/triple-o/undercloud.conf.sample
+# To change any value in the undercloud.conf, create a file here with the changes as a <key>: <value> format.
+# Example:
+local_interface: eth0
