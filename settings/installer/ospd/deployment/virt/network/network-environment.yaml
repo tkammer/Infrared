@@ -12,32 +12,31 @@
 # environment files we should think about using it here to automatically
 # include network-isolation.yaml.
 resource_registry:
-  OS::TripleO::BlockStorage::Net::SoftwareConfig: network/{{ installer.network.isolation.type }}/cinder-storage.yaml
-  OS::TripleO::Compute::Net::SoftwareConfig: network/{{ installer.network.isolation.type }}/compute.yaml
-  OS::TripleO::Controller::Net::SoftwareConfig: network/{{ installer.network.isolation.type }}/controller.yaml
-  OS::TripleO::ObjectStorage::Net::SoftwareConfig: network/{{ installer.network.isolation.type }}/swift-storage.yaml
-  OS::TripleO::CephStorage::Net::SoftwareConfig: network/{{ installer.network.isolation.type }}/ceph-storage.yaml
+  OS::TripleO::BlockStorage::Net::SoftwareConfig: network/{{ installer.network.isolation }}/cinder-storage.yaml
+  OS::TripleO::Compute::Net::SoftwareConfig: network/{{ installer.network.isolation }}/compute.yaml
+  OS::TripleO::Controller::Net::SoftwareConfig: network/{{ installer.network.isolation }}/controller.yaml
+  OS::TripleO::ObjectStorage::Net::SoftwareConfig: network/{{ installer.network.isolation }}/swift-storage.yaml
+  OS::TripleO::CephStorage::Net::SoftwareConfig: network/{{ installer.network.isolation }}/ceph-storage.yaml
 
-content:
-    parameter_defaults:
-        ExternalNetCidr: '10.0.0.0/24'
-        ExternalAllocationPools: [{'start': '10.0.0.101', 'end': '10.0.0.149'}]
-        ExternalInterfaceDefaultRoute: '10.0.0.1'
-        ExternalNetworkVlanID: 10
-        InternalApiNetCidr: '172.17.1.0/24'
-        InternalApiAllocationPools: [{'start': '172.17.1.10', 'end': '172.17.1.200'}]
-        InternalApiNetworkVlanID: 20
-        StorageNetCidr: '172.17.3.0/24'
-        StorageAllocationPools: [{'start': '172.17.3.10', 'end': '172.17.3.200'}]
-        StorageNetworkVlanID: 30
-        StorageMgmtNetCidr: '172.17.4.0/24'
-        StorageMgmtAllocationPools: [{'start': '172.17.4.10', 'end': '172.17.4.200'}]
-        StorageMgmtNetworkVlanID: 40
-        TenantNetCidr: '172.17.2.0/24'
-        TenantAllocationPools: [{'start': '172.17.2.10', 'end': '172.17.2.200'}]
-        TenantNetworkVlanID: 50
-        DnsServers: ['192.0.2.1', '8.8.8.8']
-        EC2MetadataIp: 192.0.2.1
-        ControlPlaneDefaultRoute: 192.0.2.1
-        ControlPlaneSubnetCidr: "24"
-        NeutronExternalNetworkBridge: "''"
+parameter_defaults:
+    ExternalInterfaceDefaultRoute: '10.0.0.1'
+    ExternalNetCidr: '10.0.0.0/24'
+    ExternalAllocationPools: [{'start': '10.0.0.101', 'end': '10.0.0.149'}]
+    ExternalNetworkVlanID: '10'
+    InternalApiNetCidr: '172.17.1.0/24'
+    InternalApiAllocationPools: [{'start': '172.17.1.10', 'end': '172.17.1.200'}]
+    InternalApiNetworkVlanID: '20'
+    StorageNetCidr: '172.17.3.0/24'
+    StorageAllocationPools: [{'start': '172.17.3.10', 'end': '172.17.3.200'}]
+    StorageNetworkVlanID: '30'
+    StorageMgmtNetCidr: '172.17.4.0/24'
+    StorageMgmtAllocationPools: [{'start': '172.17.4.10', 'end': '172.17.4.200'}]
+    StorageMgmtNetworkVlanID: '40'
+    TenantNetCidr: '172.17.2.0/24'
+    TenantAllocationPools: [{'start': '172.17.2.10', 'end': '172.17.2.200'}]
+    TenantNetworkVlanID: '50'
+    ControlPlaneSubnetCidr: '24'
+    ControlPlaneDefaultRoute: '192.0.2.1'
+    EC2MetadataIp: '192.0.2.1'
+    DnsServers: ['192.0.2.1', '8.8.8.8']
+    NeutronExternalNetworkBridge: "''"

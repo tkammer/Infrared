@@ -1,0 +1,12 @@
+---
+- name: OVB - Setup BMC
+  become: yes
+  hosts: bmc
+  roles:
+      - { role: openstack/ovb/bmc, when: provisioner.nodes.bmc is defined }
+
+- name: OVB - Adjust Undercloud
+  become: yes
+  hosts: undercloud
+  roles:
+      - { role: openstack/ovb/undercloud, when: provisioner.nodes.bmc is defined }

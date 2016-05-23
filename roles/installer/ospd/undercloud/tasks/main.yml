@@ -1,4 +1,5 @@
 - name: prepare the machine for undercloud deployment
+  become: yes
   include: setup.yml
 
 - name: create the undercloud configuration

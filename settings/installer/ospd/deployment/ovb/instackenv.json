@@ -1,0 +1,18 @@
+{
+  "nodes": [
+{% for host_name in groups['overcloud_nodes'] %}
+    {
+      "name": "{{ hostvars[host_name].inventory_hostname }}",
+      "pm_addr": "{{ hostvars[host_name]['ansible_%s' % installer.undercloud.config.local_interface].address }}",
+      "pm_password": "password",
+      "pm_type": "pxe_ipmitool",
+      "mac": ["{{ hostvars[host_name]['ansible_%s' % installer.undercloud.config.local_interface].macaddress }}"],
+      "cpu": "{{ hostvars[host_name].ansible_processor_vcpus }}",
+      "memory": "{{ hostvars[host_name].ansible_memtotal_mb }}",
+      "disk": "{{ hostvars[host_name].ansible_devices.vda.size | regex_replace('^([0-9]+).*$', '\\1') }}",
+      "arch": "x86_64",
+      "pm_user": "admin"
+    }{% if not loop.last %},{% endif %}
+{% endfor %}
+    ]
+}

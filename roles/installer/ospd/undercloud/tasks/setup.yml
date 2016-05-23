@@ -48,6 +48,7 @@
   when: update|changed
 
 - name: waiting for the undercloud to be available
+  become: no
   wait_for:
       port: 22
       host: "{{ ansible_ssh_host }}"

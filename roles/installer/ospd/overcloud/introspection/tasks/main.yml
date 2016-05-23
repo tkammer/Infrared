@@ -1,5 +1,5 @@
 - name: copy our instackenv.json file if present
-  copy:
+  template:
       src: "{{ installer.instackenv.file }}"
       dest: "~/"
   when: installer.instackenv.file is defined
