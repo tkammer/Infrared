@@ -1,0 +1,5 @@
+---
+name: 'identity'
+test_regex: tempest.api.identity
+whitelist: []
+blacklist: []

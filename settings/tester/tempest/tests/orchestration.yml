@@ -1,0 +1,5 @@
+---
+name: 'orchestration'
+test_regex: tempest.api.orchestration
+whitelist: []
+blacklist: []

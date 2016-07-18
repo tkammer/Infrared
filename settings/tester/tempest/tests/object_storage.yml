@@ -1,0 +1,5 @@
+---
+name: 'object_storage'
+test_regex: tempest.api.object_storage
+whitelist: []
+blacklist: []

@@ -1,9 +1,3 @@
 ---
-- name: Fetch results
-  hosts: tester
+- hosts: tester
   gather_facts: no
-  tasks:
-      - fetch:
-            src: "{{ tester.dir }}/tempest.xml"
-            dest: "{{ lookup('env', 'PWD') }}/nosetests.xml"
-            flat: yes

@@ -1,0 +1,5 @@
+---
+name: 'volume'
+test_regex: tempest.api.volume
+whitelist: []
+blacklist: []

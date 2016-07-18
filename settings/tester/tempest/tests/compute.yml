@@ -1,0 +1,5 @@
+---
+name: 'compute'
+test_regex: tempest.api.compute
+whitelist: []
+blacklist: []

@@ -1,0 +1,5 @@
+---
+name: 'baremetal'
+test_regex: tempest.api.baremetal
+whitelist: []
+blacklist: []

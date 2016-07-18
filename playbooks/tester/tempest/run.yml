@@ -45,14 +45,25 @@
             regex: "--regex {{ tester.tests.test_regex }}"
         when: tester.tests.test_regex
 
-      - name: run tempest
-        shell: >
-            source .venv/bin/activate;
-            ostestr --subunit --no-pretty {{ regex | default('') }} {{ whitelistfile | default('') }} {{ blacklistfile | default('') }}
-            | tee >(subunit2junitxml --output-to=tempest.xml ) | subunit-trace --no-failure-debug -f
-        args:
-            executable: /bin/bash
-            chdir: "{{ tester.dir }}"
-            creates: "{{ tester.dir }}/tempest.xml"
-        ignore_errors: true
+      - block:
+          - name: run tempest
+            shell: >
+                source .venv/bin/activate;
+                ostestr --subunit --no-pretty {{ regex | default('') }} {{ whitelistfile | default('') }} {{ blacklistfile | default('') }}
+                | subunit2junitxml --output-to=tempest-{{ tester.tests.name }}.xml
+            args:
+                executable: /bin/bash
+                chdir: "{{ tester.dir }}"
+            ignore_errors: true
+
+          - name: inject the test suite name to the XML name attribute
+            shell: "sed 's/name=\"\"/name=\"{{ tester.tests.name }}\"/' -i tempest-{{ tester.tests.name }}.xml"
+            args:
+                chdir: "{{ tester.dir }}"
+
+          - name: Fetch results
+            fetch:
+                src: "{{ tester.dir }}/tempest-{{ tester.tests.name }}.xml"
+                dest: "{{ lookup('env', 'PWD') }}/tempest-{{ tester.tests.name }}.xml"
+                flat: yes
         when: tester.tests.test_regex is defined or whitelistfile is defined or blacklistfile is defined
